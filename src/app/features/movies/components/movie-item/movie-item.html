@@ -1,1 +1,15 @@
-<p>movie-item works!</p>
+<article class="movie-card">
+  <div class="poster">
+    <img [src]="movie.poster" [alt]="movie.title" loading="lazy" />
+    <span class="rating" aria-label="التقييم">
+      {{ movie.rating | number : '1.1-1' }}
+    </span>
+  </div>
+
+  <div class="info">
+    <h3>{{ movie.title }}</h3>
+    <p class="meta">{{ movie.year }} · {{ movie.genre }} · {{ movie.duration }} دقيقة</p>
+    <p class="description">{{ movie.description }}</p>
+    <p class="director">إخراج: {{ movie.director }}</p>
+  </div>
+</article>
