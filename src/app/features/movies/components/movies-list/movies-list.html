@@ -1,1 +1,12 @@
-<p>movies-list works!</p>
+<ng-container *ngIf="movies.length; else emptyState">
+  <section class="movies-grid">
+    <app-movie-item *ngFor="let movie of movies" [movie]="movie" />
+  </section>
+</ng-container>
+
+<ng-template #emptyState>
+  <div class="empty">
+    <h3>لم يتم العثور على نتائج</h3>
+    <p>حاول تعديل كلمات البحث أو استعرض الأنواع المختلفة في الأعلى.</p>
+  </div>
+</ng-template>

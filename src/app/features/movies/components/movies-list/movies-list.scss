@@ -1,0 +1,26 @@
+.movies-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.empty {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.empty h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.3rem;
+  color: #ffffff;
+}
+
+.empty p {
+  margin: 0;
+  line-height: 1.7;
+}

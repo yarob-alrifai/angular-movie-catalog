@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Movie } from '../../../../core/models/movie.model';
+import { MovieItem } from '../movie-item/movie-item';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-movies-list',
-  imports: [],
+  imports: [CommonModule, MovieItem],
   templateUrl: './movies-list.html',
   styleUrl: './movies-list.scss',
 })
 export class MoviesList {
-
+  @Input() movies: Movie[] = [];
 }
