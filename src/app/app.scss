@@ -1,0 +1,19 @@
+:host {
+  --page-bg: radial-gradient(circle at top left, #1f2041, #0f1024 60%);
+  --text-color: #f6f6ff;
+  --max-width: 1200px;
+
+  display: block;
+  min-height: 100vh;
+  background: var(--page-bg);
+  color: var(--text-color);
+  font-family: 'Poppins', 'Segoe UI', Tahoma, sans-serif;
+}
+
+.layout {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1.5rem 4rem;
+  box-sizing: border-box;
+}
