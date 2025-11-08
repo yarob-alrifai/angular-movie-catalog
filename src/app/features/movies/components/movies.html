@@ -1,11 +1,11 @@
 <section class="movies-page">
   <header class="page-header">
     <div class="page-title">
-      <p class="eyebrow">قائمة مميزة</p>
-      <h1>استكشف أفضل الأفلام</h1>
+      <p class="eyebrow">Featured collection</p>
+      <h1>Discover top movies</h1>
       <p class="subtitle">
-        اختر فيلماً لسهرة رائعة، ابحث باسم المخرج أو النوع، واستمتع بتصميم أنيق يسلط الضوء على كل
-        التفاصيل.
+        Pick a film for the perfect movie night, search by director or genre, and enjoy a refined
+        layout that highlights every detail.
       </p>
     </div>
 
@@ -13,14 +13,14 @@
   </header>
 
   <div class="page-meta" *ngIf="!isLoading() && !errorMessage()">
-    <span class="badge">{{ filteredMovies().length }} فيلم</span>
+    <span class="badge">{{ filteredMovies().length }} movies</span>
     <ul class="genre-pills">
       <li *ngFor="let genre of genres()">{{ genre }}</li>
     </ul>
   </div>
 
   <div class="state" *ngIf="isLoading()">
-    <p class="state__message">جاري تحميل قائمة الأفلام...</p>
+    <p class="state__message">Loading the movie list...</p>
   </div>
 
   <div class="state state--error" *ngIf="!isLoading() && errorMessage()">
@@ -28,7 +28,7 @@
   </div>
 
   <div class="state" *ngIf="!isLoading() && !errorMessage() && filteredMovies().length === 0">
-    <p class="state__message">لا توجد أفلام مطابقة لبحثك الحالي.</p>
+    <p class="state__message">No movies match your current search.</p>
   </div>
 
   <app-movies-list

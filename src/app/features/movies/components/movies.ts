@@ -46,7 +46,7 @@ export class Movies {
 
         return request$.pipe(
           catchError(() => {
-            this.errorMessage.set('تعذّر تحميل قائمة الأفلام. حاول مجدداً لاحقاً.');
+            this.errorMessage.set('Unable to load the movie list. Please try again later.');
             return of<Movie[]>([]);
           })
         );
