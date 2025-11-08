@@ -1,1 +1,17 @@
-<p>movie-filter works!</p>
+<div class="filter">
+  <label class="sr-only" for="movie-search">ابحث عن فيلم</label>
+  <div class="input-wrapper">
+    <span class="icon" aria-hidden="true">🔍</span>
+    <input
+      id="movie-search"
+      type="search"
+      [ngModel]="query"
+      (ngModelChange)="query = $event"
+      placeholder="ابحث عن فيلم، مخرج أو نوع"
+      autocomplete="off"
+    />
+    <button type="button" class="clear" *ngIf="query" (click)="clear()" aria-label="مسح البحث">
+      ✕
+    </button>
+  </div>
+</div>
