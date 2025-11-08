@@ -29,11 +29,16 @@ export class MovieService implements MovieServiceInterface {
     if (!trimmedQuery) {
       return this.getMovies();
     }
-
-    const params = new HttpParams().set('q', trimmedQuery);
+    // debugger;
 
     return this.http
-      .get<MovieInput[]>(this.baseUrl, { params })
-      .pipe(map((movies) => movies.map((movie) => createMovie(movie))));
+      .get<MovieInput[]>(this.baseUrl)
+      .pipe(
+        map((movies) =>
+          movies
+            .filter((movie) => movie.title?.toLowerCase().includes(trimmedQuery.toLowerCase()))
+            .map((movie) => createMovie(movie))
+        )
+      );
   }
 }
