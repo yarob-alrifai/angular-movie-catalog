@@ -1,1 +1,38 @@
-<p>movies works!</p>
+<section class="movies-page">
+  <header class="page-header">
+    <div class="page-title">
+      <p class="eyebrow">قائمة مميزة</p>
+      <h1>استكشف أفضل الأفلام</h1>
+      <p class="subtitle">
+        اختر فيلماً لسهرة رائعة، ابحث باسم المخرج أو النوع، واستمتع بتصميم أنيق يسلط الضوء على كل
+        التفاصيل.
+      </p>
+    </div>
+
+    <app-movie-filter (search)="onSearch($event)" />
+  </header>
+
+  <div class="page-meta" *ngIf="!isLoading() && !errorMessage()">
+    <span class="badge">{{ filteredMovies().length }} فيلم</span>
+    <ul class="genre-pills">
+      <li *ngFor="let genre of genres()">{{ genre }}</li>
+    </ul>
+  </div>
+
+  <div class="state" *ngIf="isLoading()">
+    <p class="state__message">جاري تحميل قائمة الأفلام...</p>
+  </div>
+
+  <div class="state state--error" *ngIf="!isLoading() && errorMessage()">
+    <p class="state__message">{{ errorMessage() }}</p>
+  </div>
+
+  <div class="state" *ngIf="!isLoading() && !errorMessage() && filteredMovies().length === 0">
+    <p class="state__message">لا توجد أفلام مطابقة لبحثك الحالي.</p>
+  </div>
+
+  <app-movies-list
+    *ngIf="!isLoading() && !errorMessage() && filteredMovies().length > 0"
+    [movies]="filteredMovies()"
+  />
+</section>

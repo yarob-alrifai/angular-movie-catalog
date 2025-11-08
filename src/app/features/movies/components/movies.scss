@@ -1,0 +1,129 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.movies-page {
+  width: 100%;
+  max-width: var(--max-width);
+  direction: rtl;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.page-header {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  align-items: end;
+}
+
+.page-title {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.eyebrow {
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.page-title h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  color: #fff;
+}
+
+.subtitle {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.8;
+  max-width: 38ch;
+}
+
+.page-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #ff9f1c, #ff4d6d);
+  color: #0f1024;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 15px 35px rgba(255, 115, 179, 0.25);
+}
+
+.genre-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.genre-pills li {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.85);
+  transition: border-color 0.3s ease, transform 0.3s ease, background 0.3s ease;
+}
+
+.genre-pills li:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.state {
+  display: grid;
+  place-items: center;
+  min-height: 8rem;
+  padding: 2rem;
+  border-radius: 1.25rem;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.state__message {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.015em;
+}
+
+.state--error {
+  border-color: rgba(255, 99, 132, 0.4);
+  background: linear-gradient(145deg, rgba(255, 99, 132, 0.18), rgba(255, 255, 255, 0.04));
+  color: #ffe3e8;
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    align-items: start;
+  }
+
+  .subtitle {
+    max-width: none;
+  }
+}
