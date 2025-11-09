@@ -4,10 +4,10 @@ import {
   catchError,
   debounceTime,
   distinctUntilChanged,
+  finalize,
   of,
   startWith,
   switchMap,
-  tap,
 } from 'rxjs';
 import { Movie } from '../../../core/models/movie.model';
 import { MOVIE_SERVICE_INTERFACE } from '../../../core/services/movie-service.interface';
@@ -35,11 +35,10 @@ export class Movies {
       startWith(''),
       debounceTime(200),
       distinctUntilChanged(),
-      tap(() => {
+      switchMap((query) => {
         this.isLoading.set(true);
         this.errorMessage.set(null);
-      }),
-      switchMap((query) => {
+
         const trimmed = query.trim();
 
         const request$ = trimmed
@@ -50,11 +49,11 @@ export class Movies {
           catchError(() => {
             this.errorMessage.set('Unable to load the movie list. Please try again later.');
             return of<Movie[]>([]);
+          }),
+          finalize(() => {
+            this.isLoading.set(false);
           })
         );
-      }),
-      tap(() => {
-        this.isLoading.set(false);
       })
     ),
     { initialValue: [] as Movie[] }

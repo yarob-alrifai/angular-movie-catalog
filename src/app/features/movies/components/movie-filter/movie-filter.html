@@ -1,13 +1,12 @@
-<div class="filter">
+<form class="filter" [formGroup]="searchForm" (ngSubmit)="onSearch()">
   <label class="sr-only" for="movie-search">Search for a movie</label>
   <div class="input-wrapper">
     <span class="icon" aria-hidden="true">🔍</span>
     <input
       id="movie-search"
       type="search"
-      [ngModel]="query"
-      (ngModelChange)="onQueryChange($event)"
-      (search)="onQueryChange($event)"
+      formControlName="query"
+      (search)="onSearch()"
       placeholder="Search for a movie, director, or genre"
       autocomplete="off"
     />
@@ -15,4 +14,4 @@
       ✕
     </button>
   </div>
-</div>
+</form>
