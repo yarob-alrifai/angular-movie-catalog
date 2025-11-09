@@ -1,14 +1,5 @@
-import { Component, computed, inject, signal, ViewChild } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import {
-  catchError,
-  debounceTime,
-  distinctUntilChanged,
-  finalize,
-  of,
-  startWith,
-  switchMap,
-} from 'rxjs';
+import { Component, computed, inject, ViewChild } from '@angular/core';
+
 import { Movie } from '../../../core/models/movie.model';
 import { MOVIE_SERVICE_INTERFACE } from '../../../core/services/movie-service.interface';
 import { MoviesList } from './movies-list/movies-list';
@@ -26,40 +17,9 @@ export class Movies {
   private readonly movieService = inject(MOVIE_SERVICE_INTERFACE);
   @ViewChild(MovieDetails) private readonly movieDetails?: MovieDetails;
 
-  protected readonly searchTerm = signal('');
-  protected readonly isLoading = signal(true);
-  protected readonly errorMessage = signal<string | null>(null);
-
-  private readonly moviesQuery = toSignal(
-    toObservable(this.searchTerm).pipe(
-      startWith(''),
-      debounceTime(200),
-      distinctUntilChanged(),
-      switchMap((query) => {
-        this.isLoading.set(true);
-        this.errorMessage.set(null);
-
-        const trimmed = query.trim();
-
-        const request$ = trimmed
-          ? this.movieService.searchMovies(trimmed)
-          : this.movieService.getMovies();
-
-        return request$.pipe(
-          catchError(() => {
-            this.errorMessage.set('Unable to load the movie list. Please try again later.');
-            return of<Movie[]>([]);
-          }),
-          finalize(() => {
-            this.isLoading.set(false);
-          })
-        );
-      })
-    ),
-    { initialValue: [] as Movie[] }
-  );
-
-  protected readonly movies = computed(() => this.moviesQuery());
+  protected readonly isLoading = this.movieService.moviesLoading;
+  protected readonly errorMessage = this.movieService.moviesErrorMessage;
+  protected readonly movies = this.movieService.movies;
 
   protected readonly filteredMovies = computed(() => this.movies());
 
@@ -72,7 +32,7 @@ export class Movies {
   });
 
   onSearch(query: string): void {
-    this.searchTerm.set(query);
+    this.movieService.searchMovies(query);
   }
 
   openMovieDetails(movie: Movie): void {

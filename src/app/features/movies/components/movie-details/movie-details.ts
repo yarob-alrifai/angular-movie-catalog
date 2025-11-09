@@ -19,49 +19,19 @@ export class MovieDetails {
   private readonly movieService = inject(MOVIE_SERVICE_INTERFACE);
 
   protected readonly isOpen = signal(false);
-  protected readonly isLoading = signal(true);
-  protected readonly errorMessage = signal<string | null>(null);
-  private readonly selectedMovieId = signal<number | null>(null);
 
-  private readonly movieQuery = toSignal(
-    toObservable(this.selectedMovieId).pipe(
-      switchMap((id) => {
-        if (!id) {
-          this.isLoading.set(false);
-          this.errorMessage.set(null);
-          return of<Movie | undefined>(undefined);
-        }
-
-        this.isLoading.set(true);
-        this.errorMessage.set(null);
-
-        return this.movieService.getMovieById(id).pipe(
-          tap((movie) => {
-            if (!movie) {
-              this.errorMessage.set('Movie not found.');
-            }
-          }),
-          catchError(() => {
-            this.errorMessage.set('Unable to load movie details. Please try again later.');
-            return of<Movie | undefined>(undefined);
-          }),
-          finalize(() => this.isLoading.set(false))
-        );
-      })
-    ),
-    { initialValue: undefined as Movie | undefined }
-  );
-
-  protected readonly movie = computed(() => this.movieQuery());
+  protected readonly isLoading = this.movieService.movieDetailsLoading;
+  protected readonly errorMessage = this.movieService.movieDetailsErrorMessage;
+  protected readonly movie = this.movieService.movieDetails;
 
   open(movieId: number): void {
-    this.selectedMovieId.set(movieId);
+    this.movieService.selectMovie(movieId);
     this.isOpen.set(true);
   }
 
   close(): void {
     this.isOpen.set(false);
-    this.selectedMovieId.set(null);
+    this.movieService.selectMovie(null);
   }
 
   @HostListener('document:keydown.escape')

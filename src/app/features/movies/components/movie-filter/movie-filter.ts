@@ -37,10 +37,6 @@ export class MovieFilter {
     return this.querySignal();
   }
 
-  protected onSearch(): void {
-    this.emitQuery(this.searchForm.value.query ?? '', true);
-  }
-
   protected clear(): void {
     this.searchForm.setValue({ query: '' });
   }

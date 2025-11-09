@@ -1,12 +1,17 @@
-import { InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Movie } from '../models/movie.model';
+import { InjectionToken, Signal } from '@angular/core';
 
 export interface MovieServiceInterface {
-  getMovies(): Observable<Movie[]>;
-  getMovieById(id: number): Observable<Movie | undefined>;
-  searchMovies(query: string): Observable<Movie[]>;
+  readonly movies: Signal<Movie[]>;
+  readonly moviesLoading: Signal<boolean>;
+  readonly moviesErrorMessage: Signal<string | null>;
+  readonly movieDetails: Signal<Movie | undefined>;
+  readonly movieDetailsLoading: Signal<boolean>;
+  readonly movieDetailsErrorMessage: Signal<string | null>;
+  searchMovies(query: string): void;
+  selectMovie(id: number | null): void;
 }
 
 export const MOVIE_SERVICE_INTERFACE = new InjectionToken<MovieServiceInterface>(
