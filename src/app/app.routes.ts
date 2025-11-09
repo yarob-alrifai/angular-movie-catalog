@@ -1,3 +1,15 @@
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [];
+import { Movies } from './features/movies/components/movies';
+
+export const routes: Routes = [
+  {
+    path: '',
+    component: Movies,
+  },
+
+  {
+    path: '**',
+    redirectTo: '',
+  },
+];

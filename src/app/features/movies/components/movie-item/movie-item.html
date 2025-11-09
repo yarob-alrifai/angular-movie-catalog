@@ -1,4 +1,9 @@
-<article class="movie-card">
+<button
+  type="button"
+  class="movie-card"
+  (click)="onViewDetails()"
+  [attr.aria-label]="'View details for ' + movie.title"
+>
   <div class="poster">
     <img [src]="movie.poster" [alt]="movie.title" loading="lazy" />
     <span class="rating" aria-label="Rating">
@@ -8,8 +13,8 @@
 
   <div class="info">
     <h3>{{ movie.title }}</h3>
-    <p class="meta">{{ movie.year }} · {{ movie.genre }} · {{ movie.duration }} min</p>
+    <p class="meta">{{ movie.year }} · {{ movie.genre }} · {{ movie.duration }} دقيقة</p>
     <p class="description">{{ movie.description }}</p>
-    <p class="director">Directed by: {{ movie.director }}</p>
+    <p class="director">إخراج: {{ movie.director }}</p>
   </div>
-</article>
+</button>

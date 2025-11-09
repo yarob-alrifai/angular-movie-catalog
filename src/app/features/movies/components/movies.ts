@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, ViewChild } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import {
   catchError,
@@ -14,15 +14,17 @@ import { MOVIE_SERVICE_INTERFACE } from '../../../core/services/movie-service.in
 import { MoviesList } from './movies-list/movies-list';
 import { MovieFilter } from './movie-filter/movie-filter';
 import { CommonModule } from '@angular/common';
+import { MovieDetails } from './movie-details/movie-details';
 
 @Component({
   selector: 'app-movies',
-  imports: [CommonModule, MovieFilter, MoviesList],
+  imports: [CommonModule, MovieFilter, MoviesList, MovieDetails],
   templateUrl: './movies.html',
   styleUrl: './movies.scss',
 })
 export class Movies {
   private readonly movieService = inject(MOVIE_SERVICE_INTERFACE);
+  @ViewChild(MovieDetails) private readonly movieDetails?: MovieDetails;
 
   protected readonly searchTerm = signal('');
   protected readonly isLoading = signal(true);
@@ -72,5 +74,9 @@ export class Movies {
 
   onSearch(query: string): void {
     this.searchTerm.set(query);
+  }
+
+  openMovieDetails(movie: Movie): void {
+    this.movieDetails?.open(movie.id);
   }
 }

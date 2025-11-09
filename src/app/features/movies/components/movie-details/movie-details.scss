@@ -1,0 +1,203 @@
+:host {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+:host(.open) {
+  pointer-events: auto;
+}
+
+:host-context(body) {
+  font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 7, 20, 0.72);
+  backdrop-filter: blur(10px);
+  pointer-events: auto;
+}
+
+.movie-details {
+  position: fixed;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  width: min(900px, calc(100vw - 2rem));
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  background: rgba(16, 18, 44, 0.95);
+  border-radius: 2rem;
+  padding: 2.5rem;
+  box-shadow: 0 40px 80px rgba(2, 3, 20, 0.55);
+  color: #f5f7ff;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.movie-details__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.movie-details__title {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.close-button {
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  font-size: 1.2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.close-button:hover,
+.close-button:focus-visible {
+  background: rgba(255, 255, 255, 0.18);
+  transform: rotate(90deg);
+  outline: none;
+}
+
+.state {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.state__message {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1rem;
+}
+
+.state--error {
+  border: 1px solid rgba(255, 105, 97, 0.45);
+  background: rgba(255, 105, 97, 0.12);
+}
+
+.details-card {
+  display: grid;
+  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+  gap: 2rem;
+}
+
+.poster {
+  position: relative;
+  border-radius: 1.75rem;
+  overflow: hidden;
+  box-shadow: 0 30px 55px rgba(10, 10, 30, 0.45);
+}
+
+.poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.rating {
+  position: absolute;
+  inset-inline-end: 1rem;
+  inset-block-start: 1rem;
+  background: linear-gradient(135deg, #ffd166, #fca311);
+  color: #0f1024;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 18px 35px rgba(252, 163, 17, 0.35);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.info__header h1 {
+  margin: 0;
+  font-size: 2.3rem;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.info__header .meta {
+  margin: 0.6rem 0 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+.description {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.director {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+@media (max-width: 900px) {
+  .movie-details {
+    padding: 2rem;
+  }
+
+  .details-card {
+    grid-template-columns: 1fr;
+  }
+
+  .info__header h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .movie-details {
+    inset: auto 0 0 0;
+    transform: none;
+    width: 100%;
+    border-radius: 1.5rem 1.5rem 0 0;
+    max-height: calc(100vh - 2rem);
+  }
+
+  .movie-details__header {
+    align-items: flex-start;
+  }
+
+  .close-button {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+}

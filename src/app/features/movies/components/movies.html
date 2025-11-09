@@ -34,5 +34,8 @@
   <app-movies-list
     *ngIf="!isLoading() && !errorMessage() && filteredMovies().length > 0"
     [movies]="filteredMovies()"
+    (viewDetails)="openMovieDetails($event)"
   />
+
+  <app-movie-details />
 </section>

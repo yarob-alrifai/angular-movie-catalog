@@ -1,6 +1,10 @@
 <ng-container *ngIf="movies.length; else emptyState">
   <section class="movies-grid">
-    <app-movie-item *ngFor="let movie of movies" [movie]="movie" />
+    <app-movie-item
+      *ngFor="let movie of movies"
+      [movie]="movie"
+      (viewDetails)="viewDetails.emit($event)"
+    />
   </section>
 </ng-container>
 

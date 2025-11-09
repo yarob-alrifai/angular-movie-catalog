@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Movie } from '../../../../core/models/movie.model';
 import { MovieItem } from '../movie-item/movie-item';
 import { CommonModule } from '@angular/common';
@@ -11,4 +11,5 @@ import { CommonModule } from '@angular/common';
 })
 export class MoviesList {
   @Input() movies: Movie[] = [];
+  @Output() viewDetails = new EventEmitter<Movie>();
 }

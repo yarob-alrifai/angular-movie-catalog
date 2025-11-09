@@ -9,11 +9,24 @@
   box-shadow: 0 25px 45px rgba(10, 10, 30, 0.35);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   height: 100%;
+
+  color: inherit;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  background: none;
 }
 
-.movie-card:hover {
+.movie-card:hover,
+.movie-card:focus-visible {
   transform: translateY(-8px);
   box-shadow: 0 40px 60px rgba(8, 8, 26, 0.45);
+}
+
+.movie-card:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 4px;
 }
 
 .poster {
