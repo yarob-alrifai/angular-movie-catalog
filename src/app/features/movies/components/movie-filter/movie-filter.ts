@@ -17,12 +17,28 @@ export class MovieFilter {
     return this.querySignal();
   }
 
-  protected set query(value: string) {
-    this.querySignal.set(value);
-    this.search.emit(value);
+  protected onQueryChange(value: string | Event): void {
+    const nextValue = this.getValueFromEvent(value);
+    const currentValue = this.querySignal();
+
+    if (!nextValue.trim() && !currentValue.trim()) {
+      return;
+    }
+
+    this.querySignal.set(nextValue);
+    this.search.emit(nextValue);
   }
 
   protected clear(): void {
-    this.query = '';
+    this.onQueryChange('');
+  }
+
+  private getValueFromEvent(value: string | Event): string {
+    if (typeof value === 'string') {
+      return value;
+    }
+
+    const target = value.target as HTMLInputElement | null;
+    return target?.value ?? '';
   }
 }

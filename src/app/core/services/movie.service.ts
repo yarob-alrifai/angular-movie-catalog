@@ -29,7 +29,7 @@ export class MovieService implements MovieServiceInterface {
     if (!trimmedQuery) {
       return this.getMovies();
     }
-    // debugger;
+    debugger;
 
     return this.http
       .get<MovieInput[]>(this.baseUrl)

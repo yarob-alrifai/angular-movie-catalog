@@ -6,7 +6,8 @@
       id="movie-search"
       type="search"
       [ngModel]="query"
-      (ngModelChange)="query = $event"
+      (ngModelChange)="onQueryChange($event)"
+      (search)="onQueryChange($event)"
       placeholder="Search for a movie, director, or genre"
       autocomplete="off"
     />
