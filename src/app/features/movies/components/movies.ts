@@ -22,8 +22,6 @@ export class Movies {
 
   protected readonly movies = this.movieService.movies;
 
-  protected readonly filteredMovies = computed(() => this.movies());
-
   retryLoadingMovies(): void {
     this.movieService.reloadMovies();
   }

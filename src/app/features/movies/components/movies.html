@@ -23,12 +23,12 @@
       Try again
     </button>
   </div>
-  } @if (!isLoading() && !errorMessage() && filteredMovies().length === 0) {
+  } @if (!isLoading() && !errorMessage() && movies().length === 0) {
   <div class="state">
     <p class="state__message">No movies match your current search.</p>
   </div>
-  } @if (!isLoading() && !errorMessage() && filteredMovies().length > 0) {
-  <app-movies-list [movies]="filteredMovies()" (viewDetails)="openMovieDetails($event)" />
+  } @if (!isLoading() && !errorMessage() && movies().length > 0) {
+  <app-movies-list [movies]="movies()" (viewDetails)="openMovieDetails($event)" />
   }
 
   <app-movie-details />
