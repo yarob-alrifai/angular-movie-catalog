@@ -1,6 +1,8 @@
 <form class="filter" [formGroup]="searchForm">
   <div class="input-wrapper">
     <input id="movie-search" formControlName="query" placeholder="Search for a movie" />
-    <button type="button" class="clear" *ngIf="query" (click)="clear()">✕</button>
+    @if (query) {
+    <button type="button" class="clear" (click)="clear()">✕</button>
+    }
   </div>
 </form>

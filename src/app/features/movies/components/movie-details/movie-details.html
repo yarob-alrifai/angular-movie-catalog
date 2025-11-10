@@ -1,49 +1,49 @@
-<ng-container *ngIf="isOpen()">
-  <div class="backdrop" (click)="close()"></div>
+@if (isOpen()) {
+<div class="backdrop" (click)="close()"></div>
 
-  <section
-    class="movie-details"
-    role="dialog"
-    aria-modal="true"
-    [attr.aria-label]="movie()?.title ?? 'Movie details'"
-    (click)="$event.stopPropagation()"
-  >
-    <header class="movie-details__header">
-      <h2 class="movie-details__title">Movie details</h2>
-      <button type="button" class="close-button" (click)="close()" aria-label="Close details">
-        ✕
-      </button>
-    </header>
+<section
+  class="movie-details"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-label]="movie()?.title ?? 'Movie details'"
+  (click)="$event.stopPropagation()"
+>
+  <header class="movie-details__header">
+    <h2 class="movie-details__title">Movie details</h2>
+    <button type="button" class="close-button" (click)="close()" aria-label="Close details">
+      ✕
+    </button>
+  </header>
 
-    <div class="state" *ngIf="isLoading()">
-      <p class="state__message">Loading movie details...</p>
+  @if (isLoading()) {
+  <div class="state">
+    <p class="state__message">Loading movie details...</p>
+  </div>
+  } @if (!isLoading() && errorMessage()) {
+  <div class="state state--error">
+    <p class="state__message">{{ errorMessage() }}</p>
+  </div>
+  } @if (!isLoading() && !errorMessage()) { @if (movie(); as movie) {
+  <article class="details-card">
+    <div class="poster">
+      <img [src]="movie.poster" [alt]="movie.title" loading="lazy" />
+      <span class="rating" aria-label="Rating">{{ movie.rating | number : '1.1-1' }}</span>
     </div>
 
-    <div class="state state--error" *ngIf="!isLoading() && errorMessage()">
-      <p class="state__message">{{ errorMessage() }}</p>
+    <div class="info">
+      <header class="info__header">
+        <h1>{{ movie.title }}</h1>
+        <p class="meta">{{ movie.year }} · {{ movie.genre }} · {{ movie.duration }} min</p>
+      </header>
+
+      <p class="description">{{ movie.description }}</p>
+
+      <p class="director">
+        <span class="label">Director</span>
+        <span class="value">{{ movie.director }}</span>
+      </p>
     </div>
-
-    <ng-container *ngIf="!isLoading() && !errorMessage() && movie() as movie">
-      <article class="details-card">
-        <div class="poster">
-          <img [src]="movie.poster" [alt]="movie.title" loading="lazy" />
-          <span class="rating" aria-label="Rating">{{ movie.rating | number : '1.1-1' }}</span>
-        </div>
-
-        <div class="info">
-          <header class="info__header">
-            <h1>{{ movie.title }}</h1>
-            <p class="meta">{{ movie.year }} · {{ movie.genre }} · {{ movie.duration }} min</p>
-          </header>
-
-          <p class="description">{{ movie.description }}</p>
-
-          <p class="director">
-            <span class="label">Director</span>
-            <span class="value">{{ movie.director }}</span>
-          </p>
-        </div>
-      </article>
-    </ng-container>
-  </section>
-</ng-container>
+  </article>
+  } }
+</section>
+}

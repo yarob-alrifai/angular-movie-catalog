@@ -12,26 +12,24 @@
     <app-movie-filter (search)="onSearch($event)" />
   </header>
 
-  <div class="state" *ngIf="isLoading()">
+  @if (isLoading()) {
+  <div class="state">
     <p class="state__message">Loading the movie list...</p>
   </div>
-
-  <div class="state state--error" *ngIf="!isLoading() && errorMessage()">
+  } @if (!isLoading() && errorMessage()) {
+  <div class="state state--error">
     <p class="state__message">{{ errorMessage() }}</p>
     <button type="button" class="state__action-button" (click)="retryLoadingMovies()">
       Try again
     </button>
   </div>
-
-  <div class="state" *ngIf="!isLoading() && !errorMessage() && filteredMovies().length === 0">
+  } @if (!isLoading() && !errorMessage() && filteredMovies().length === 0) {
+  <div class="state">
     <p class="state__message">No movies match your current search.</p>
   </div>
-
-  <app-movies-list
-    *ngIf="!isLoading() && !errorMessage() && filteredMovies().length > 0"
-    [movies]="filteredMovies()"
-    (viewDetails)="openMovieDetails($event)"
-  />
+  } @if (!isLoading() && !errorMessage() && filteredMovies().length > 0) {
+  <app-movies-list [movies]="filteredMovies()" (viewDetails)="openMovieDetails($event)" />
+  }
 
   <app-movie-details />
 </section>

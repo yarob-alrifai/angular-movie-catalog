@@ -1,16 +1,13 @@
-<ng-container *ngIf="movies.length; else emptyState">
-  <section class="movies-grid">
-    <app-movie-item
-      *ngFor="let movie of movies"
-      [movie]="movie"
-      (viewDetails)="viewDetails.emit($event)"
-    />
-  </section>
-</ng-container>
+@if (movies.length > 0) {
+<section class="movies-grid">
+  @for (movie of movies; track movie.id) {
+  <app-movie-item [movie]="movie" (viewDetails)="viewDetails.emit($event)" />
+  }
+</section>
+} @else {
 
-<ng-template #emptyState>
-  <div class="empty">
-    <h3>No results found</h3>
-    <p>Try adjusting your search terms or explore the genres listed above.</p>
-  </div>
-</ng-template>
+<div class="empty">
+  <h3>No results found</h3>
+  <p>Try adjusting your search terms or explore the genres listed above.</p>
+</div>
+}
