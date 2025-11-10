@@ -64,6 +64,29 @@
   letter-spacing: 0.015em;
 }
 
+.state__action-button {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: 9999px;
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.state__action-button:focus,
+.state__action-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.state__action-button:active {
+  transform: translateY(0);
+}
+
 .state--error {
   border-color: rgba(255, 99, 132, 0.4);
   background: linear-gradient(145deg, rgba(255, 99, 132, 0.18), rgba(255, 255, 255, 0.04));

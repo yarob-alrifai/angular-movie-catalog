@@ -18,6 +18,9 @@
 
   <div class="state state--error" *ngIf="!isLoading() && errorMessage()">
     <p class="state__message">{{ errorMessage() }}</p>
+    <button type="button" class="state__action-button" (click)="retryLoadingMovies()">
+      Try again
+    </button>
   </div>
 
   <div class="state" *ngIf="!isLoading() && !errorMessage() && filteredMovies().length === 0">

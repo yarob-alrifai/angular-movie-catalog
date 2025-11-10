@@ -38,21 +38,28 @@ export class MovieService implements MovieServiceInterface {
 
   private readonly movieDetailsCache = new Map<number, Movie>();
 
-  private readonly moviesResponse$ = defer(() => {
-    this.moviesLoading.set(true);
-    this.moviesErrorMessage.set(null);
+  private readonly reloadMoviesTrigger = signal(0);
 
-    return this.http.get<MovieInput[]>(this.baseUrl).pipe(
-      map((movies) => movies.map((movie) => createMovie(movie))),
-      catchError(() => {
-        this.moviesErrorMessage.set(this.movieListErrorMessageText);
+  private readonly moviesResponse$ = toObservable(this.reloadMoviesTrigger).pipe(
+    switchMap(() =>
+      defer(() => {
+        this.moviesLoading.set(true);
+        this.moviesErrorMessage.set(null);
 
-        return of<Movie[]>([]);
-      }),
+        return this.http.get<MovieInput[]>(this.baseUrl).pipe(
+          map((movies) => movies.map((movie) => createMovie(movie))),
+          catchError(() => {
+            this.moviesErrorMessage.set(this.movieListErrorMessageText);
 
-      finalize(() => this.moviesLoading.set(false))
-    );
-  }).pipe(shareReplay({ bufferSize: 1, refCount: true }));
+            return of<Movie[]>([]);
+          }),
+
+          finalize(() => this.moviesLoading.set(false))
+        );
+      })
+    ),
+    shareReplay({ bufferSize: 1, refCount: true })
+  );
 
   private readonly allMovies = toSignal(this.moviesResponse$, {
     initialValue: [] as Movie[],
@@ -115,5 +122,9 @@ export class MovieService implements MovieServiceInterface {
 
   selectMovie(id: number | null): void {
     this.selectedMovieId.set(id);
+  }
+
+  reloadMovies(): void {
+    this.reloadMoviesTrigger.update((value) => value + 1);
   }
 }

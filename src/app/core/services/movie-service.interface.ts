@@ -12,6 +12,7 @@ export interface MovieServiceInterface {
   readonly movieDetailsErrorMessage: Signal<string | null>;
   searchMovies(query: string): void;
   selectMovie(id: number | null): void;
+  reloadMovies(): void;
 }
 
 export const MOVIE_SERVICE_INTERFACE = new InjectionToken<MovieServiceInterface>(

@@ -24,6 +24,10 @@ export class Movies {
 
   protected readonly filteredMovies = computed(() => this.movies());
 
+  retryLoadingMovies(): void {
+    this.movieService.reloadMovies();
+  }
+
   onSearch(query: string): void {
     this.movieService.searchMovies(query);
   }
