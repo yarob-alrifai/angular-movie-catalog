@@ -1,4 +1,12 @@
 <main class="layout">
-  <!-- <app-movies /> -->
+  <button
+    type="button"
+    class="theme-toggle"
+    (click)="toggleTheme()"
+    [attr.aria-label]="themeToggleLabel"
+  >
+    <span aria-hidden="true">{{ isLightTheme ? '🌙' : '☀️' }}</span>
+    <span class="theme-toggle__label">{{ themeToggleLabel }}</span>
+  </button>
   <router-outlet />
 </main>

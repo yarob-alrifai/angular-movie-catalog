@@ -1,26 +1,27 @@
 .movies-grid {
   display: grid;
   gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(4, minmax(260px, 1fr));
 }
 
 .empty {
   padding: 3rem 1.5rem;
   text-align: center;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px dashed rgba(255, 255, 255, 0.2);
+  background: var(--list-empty-bg);
+  border: 1px dashed var(--list-empty-border);
   border-radius: 1.5rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--list-empty-text);
   backdrop-filter: blur(8px);
 }
 
 .empty h3 {
   margin: 0 0 0.75rem;
   font-size: 1.3rem;
-  color: #ffffff;
+  color: var(--heading-color);
 }
 
 .empty p {
   margin: 0;
   line-height: 1.7;
+  color: var(--muted-text-color);
 }
