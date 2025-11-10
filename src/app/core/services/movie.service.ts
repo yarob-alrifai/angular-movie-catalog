@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import {
@@ -7,6 +7,8 @@ import {
   distinctUntilChanged,
   finalize,
   map,
+  defer,
+  shareReplay,
   of,
   switchMap,
   tap,
@@ -33,43 +35,38 @@ export class MovieService implements MovieServiceInterface {
     'Unable to load movie details. Please try again later.';
   private readonly movieNotFoundMessageText = 'Movie not found.';
 
-  readonly movies = toSignal(
-    toObservable(this.searchQuery).pipe(
-      debounceTime(200),
-      map((query) => query.trim()),
-      distinctUntilChanged(),
-      tap(() => {
-        this.moviesLoading.set(true);
-        this.moviesErrorMessage.set(null);
+  private readonly movieDetailsCache = new Map<number, Movie>();
+
+  private readonly moviesResponse$ = defer(() => {
+    this.moviesLoading.set(true);
+    this.moviesErrorMessage.set(null);
+
+    return this.http.get<MovieInput[]>(this.baseUrl).pipe(
+      map((movies) => movies.map((movie) => createMovie(movie))),
+      catchError(() => {
+        this.moviesErrorMessage.set(this.movieListErrorMessageText);
+
+        return of<Movie[]>([]);
       }),
-      switchMap((query) =>
-        this.http.get<MovieInput[]>(this.baseUrl).pipe(
-          map((movies) => {
-            const normalizedQuery = query.toLowerCase();
 
-            return movies
-              .filter((movie) => {
-                if (!normalizedQuery) {
-                  return true;
-                }
+      finalize(() => this.moviesLoading.set(false))
+    );
+  }).pipe(shareReplay({ bufferSize: 1, refCount: true }));
 
-                const title = movie.title ?? '';
-                // debugger;
-                return title.toLowerCase().includes(normalizedQuery);
-              })
-              .map((movie) => createMovie(movie));
-          }),
-          catchError(() => {
-            this.moviesErrorMessage.set(this.movieListErrorMessageText);
+  private readonly allMovies = toSignal(this.moviesResponse$, {
+    initialValue: [] as Movie[],
+  });
 
-            return of<Movie[]>([]);
-          }),
-          finalize(() => this.moviesLoading.set(false))
-        )
-      )
-    ),
-    { initialValue: [] as Movie[] }
-  );
+  readonly movies = computed(() => {
+    const normalizedQuery = this.searchQuery().trim().toLowerCase();
+    const movies = this.allMovies();
+
+    if (!normalizedQuery) {
+      return movies;
+    }
+
+    return movies.filter((movie) => movie.title.toLowerCase().includes(normalizedQuery));
+  });
 
   readonly movieDetails = toSignal(
     toObservable(this.selectedMovieId).pipe(
@@ -81,11 +78,20 @@ export class MovieService implements MovieServiceInterface {
           return of<Movie | undefined>(undefined);
         }
 
+        const cachedMovie = this.movieDetailsCache.get(id);
+        if (cachedMovie) {
+          this.movieDetailsLoading.set(false);
+          this.movieDetailsErrorMessage.set(null);
+          return of<Movie | undefined>(cachedMovie);
+        }
+
         this.movieDetailsLoading.set(true);
         this.movieDetailsErrorMessage.set(null);
         // debugger;
         return this.http.get<MovieInput>(`${this.baseUrl}/${id}`).pipe(
           map((movie) => createMovie(movie)),
+          tap((movie) => this.movieDetailsCache.set(id, movie)),
+
           catchError((error: HttpErrorResponse) => {
             if (error.status === 404) {
               this.movieDetailsErrorMessage.set(this.movieNotFoundMessageText);
