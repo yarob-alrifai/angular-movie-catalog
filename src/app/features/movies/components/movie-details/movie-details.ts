@@ -1,9 +1,5 @@
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { Component, HostListener, computed, inject, signal } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { catchError, finalize, of, switchMap, tap } from 'rxjs';
-
-import { Movie } from '../../../../core/models/movie.model';
+import { Component, HostListener, inject, signal } from '@angular/core';
 import { MOVIE_SERVICE_INTERFACE } from '../../../../core/services/movie-service.interface';
 
 @Component({
