@@ -15,11 +15,12 @@ import {
 } from 'rxjs';
 import { createMovie, Movie, MovieInput } from '../models/movie.model';
 import { MovieServiceInterface } from './movie-service.interface';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class MovieService implements MovieServiceInterface {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:3000/movies';
+  private readonly baseUrl = environment.moviesApiUrl;
 
   private readonly searchQuery = signal('');
   private readonly selectedMovieId = signal<number | null>(null);
