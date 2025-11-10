@@ -1,16 +1,6 @@
 <form class="filter" [formGroup]="searchForm">
-  <label class="sr-only" for="movie-search">Search for a movie</label>
   <div class="input-wrapper">
-    <span class="icon" aria-hidden="true">🔍</span>
-    <input
-      id="movie-search"
-      type="search"
-      formControlName="query"
-      placeholder="Search for a movie, director, or genre"
-      autocomplete="off"
-    />
-    <button type="button" class="clear" *ngIf="query" (click)="clear()" aria-label="Clear search">
-      ✕
-    </button>
+    <input id="movie-search" formControlName="query" placeholder="Search for a movie" />
+    <button type="button" class="clear" *ngIf="query" (click)="clear()">✕</button>
   </div>
 </form>

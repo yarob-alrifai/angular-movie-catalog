@@ -54,7 +54,7 @@ export class MovieService implements MovieServiceInterface {
                 }
 
                 const title = movie.title ?? '';
-                debugger;
+                // debugger;
                 return title.toLowerCase().includes(normalizedQuery);
               })
               .map((movie) => createMovie(movie));
@@ -83,7 +83,7 @@ export class MovieService implements MovieServiceInterface {
 
         this.movieDetailsLoading.set(true);
         this.movieDetailsErrorMessage.set(null);
-        debugger;
+        // debugger;
         return this.http.get<MovieInput>(`${this.baseUrl}/${id}`).pipe(
           map((movie) => createMovie(movie)),
           catchError((error: HttpErrorResponse) => {

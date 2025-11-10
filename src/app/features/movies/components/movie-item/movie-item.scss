@@ -1,5 +1,4 @@
 .movie-card {
-  position: relative;
   display: flex;
   flex-direction: column;
   background: rgba(255, 255, 255, 0.05);
@@ -10,7 +9,6 @@
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   height: 100%;
 
-  color: inherit;
   border: none;
   cursor: pointer;
   padding: 0;
@@ -75,13 +73,8 @@
   line-height: 1.3;
 }
 
+.description,
 .meta {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.95rem;
-}
-
-.description {
   margin: 0;
   color: rgba(255, 255, 255, 0.75);
   line-height: 1.7;

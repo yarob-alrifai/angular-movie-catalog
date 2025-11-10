@@ -19,17 +19,10 @@ export class Movies {
 
   protected readonly isLoading = this.movieService.moviesLoading;
   protected readonly errorMessage = this.movieService.moviesErrorMessage;
+
   protected readonly movies = this.movieService.movies;
 
   protected readonly filteredMovies = computed(() => this.movies());
-
-  protected readonly genres = computed(() => {
-    const unique = new Set<string>();
-
-    this.movies().forEach((movie) => unique.add(movie.genre));
-
-    return Array.from(unique);
-  });
 
   onSearch(query: string): void {
     this.movieService.searchMovies(query);

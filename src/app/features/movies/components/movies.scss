@@ -1,6 +1,5 @@
 :host {
   display: block;
-  width: 100%;
 }
 
 .movies-page {
@@ -45,52 +44,6 @@
   max-width: 38ch;
 }
 
-.page-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: linear-gradient(135deg, #ff9f1c, #ff4d6d);
-  color: #0f1024;
-  padding: 0.6rem 1.2rem;
-  border-radius: 999px;
-  font-weight: 600;
-  box-shadow: 0 15px 35px rgba(255, 115, 179, 0.25);
-}
-
-.genre-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.genre-pills li {
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
-  padding: 0.5rem 1.1rem;
-  font-size: 0.85rem;
-  letter-spacing: 0.02em;
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.85);
-  transition: border-color 0.3s ease, transform 0.3s ease, background 0.3s ease;
-}
-
-.genre-pills li:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255, 255, 255, 0.35);
-  background: rgba(255, 255, 255, 0.12);
-}
-
 .state {
   display: grid;
   place-items: center;
@@ -117,7 +70,7 @@
   color: #ffe3e8;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 700px) {
   .page-header {
     align-items: start;
   }

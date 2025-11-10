@@ -12,13 +12,6 @@
     <app-movie-filter (search)="onSearch($event)" />
   </header>
 
-  <div class="page-meta" *ngIf="!isLoading() && !errorMessage()">
-    <span class="badge">{{ filteredMovies().length }} movies</span>
-    <ul class="genre-pills">
-      <li *ngFor="let genre of genres()">{{ genre }}</li>
-    </ul>
-  </div>
-
   <div class="state" *ngIf="isLoading()">
     <p class="state__message">Loading the movie list...</p>
   </div>
