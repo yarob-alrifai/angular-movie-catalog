@@ -1,59 +1,87 @@
-# AngularMovieCatalog
+# Каталог фильмов на Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.3.
+## Обзор
 
-## Development server
+Приложение **Angular Movie Catalog** — это интерактивный веб-интерфейс для просмотра коллекции фильмов с моментальным поиском и подробными карточками, содержащими год выпуска, жанр, рейтинг, длительность и режиссёра. Структура построена вокруг области «Фильмы», в которой компоненты, сервисы и модели собраны вместе, а центральный сервис (`MovieService`) управляет данными и состоянием интерфейса.
 
-To start a local development server, run:
+## Структура файлов и архитектура
+
+- **Базовый модуль фильмов:** компоненты `movies`, `movies-list`, `movie-item` и `movie-details` лежат в одной папке, что упрощает повторное использование и поддержку.
+- **Сервисы и интерфейсы:** `MovieService` реализует контракт `MovieServiceInterface`, обеспечивая разделение описания возможностей и их реализации, а доступ предоставляется через `InjectionToken`.
+- **Модели:** модель `Movie` и фабричная функция `createMovie` гарантируют единообразный формат данных во всех компонентах.
+- **Стили и дизайн:** стили оформлены на SCSS с методологией BEM (например, `state__message`) для наглядной структуры и масштабируемости.
+
+## Ключевые технические особенности
+
+- **Загрузка данных через json-server и ленивые компоненты:** страница фильмов подгружается по требованию с помощью `loadComponent`, а данные поступают из локального `json-server` по эндпоинту `/movies`.
+- **Структурные директивы `@if` и `@for`:** шаблоны отображают состояния загрузки, ошибки и результата через `@if`, а списки рендерятся с `@for`, сокращая условную логику в TypeScript.
+- **Signals для управления состоянием:** сигналы хранят состояние загрузки, ошибок и данных как в списке фильмов, так и в деталях, а RxJS-потоки преобразуются в сигналы.
+- **Обработка ошибок и оптимизация:** сетевые ошибки показываются пользователю понятными сообщениями, результаты запросов кешируются через `shareReplay`, а детали фильма кешируются локально для уменьшения числа запросов.
+- **Дополнительные оптимизации:** `debounceTime` и `distinctUntilChanged` в поиске снижают нагрузку на сеть, а `finalize` возвращает состояние интерфейса после каждого запроса.
+- **Адаптивный и семантический интерфейс:** используются семантические элементы HTML (`section`, `header`) вместе с гибкими сетками и медиа-запросами, чтобы интерфейс корректно выглядел на разных устройствах.
+
+## Используемые технологии и инструменты
+
+- **Angular 20** с независимыми компонентами, `HttpClient` и SCSS.
+- **Angular Signals и RxJS** для сочетания управления состоянием и асинхронных потоков.
+- **json-server** для имитации REST API на базе файла `db.json`.
+- **Интерфейсы и модели TypeScript** (`MovieServiceInterface`, `Movie`) для расширяемого дизайна.
+
+## Соблюдение дополнительных требований
+
+- **Адаптивная верстка (Адаптивная верстка):** реализована гибкая сетка и медиа-запросы в SCSS компонентов.
+- **Семантика (Соблюдение семантики):** используются структурные элементы `section`, `header`, `button` с понятными текстами состояний.
+- **Методология CSS (Использование какой-либо методологии CSS будет плюсом):** применена методология BEM в именовании классов, например `state__message` и `state__action-button`.
+- **Загрузка данных с обработкой ошибок (Загрузка данных о фильмах с сервера ... с обработкой ошибок):** данные поступают из `json-server`, сетевые ошибки и ответы 404 обрабатываются и отображаются пользователю.
+- **Оптимизация (Используйте средства оптимизации по максимуму):** реализованы кеширование, `shareReplay`, `debounceTime` и ленивые компоненты для снижения нагрузки.
+
+## Требования к запуску
+
+- Node.js 18 или новее.
+- Установите зависимости через npm:
+  ```bash
+  npm install
+  ```
+
+## Запуск API (JSON Server)
+
+1. Убедитесь, что в корне проекта есть `db.json` с начальными данными фильмов.
+2. Запустите JSON Server на порту 3000:
+   ```bash
+   npm run json-server
+   ```
+3. Данные будут доступны по адресу `http://localhost:3000/movies`, который указан в файле окружения для фронтенда.
+
+## Запуск Angular-приложения
+
+После запуска json-server в отдельном терминале выполните:
 
 ```bash
-ng serve
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- Сервер поднимется на `http://localhost:4200/` с помощью `ng serve`.
+- Приложение автоматически обновляется при изменении исходников.
 
-## Code scaffolding
+## Дополнительные команды
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **Сборка продакшн-версии:**
+  ```bash
+  npm run build
+  ```
+- **Запуск unit-тестов:**
+  ```bash
+  npm test
+  ```
+- **Наблюдение за сборкой в режиме разработки:**
+  ```bash
+  npm run watch
+  ```
 
-```bash
-ng generate component component-name
-```
+## Сокращённая структура каталогов
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- `src/app/core`: общие модели и сервисы, включая `MovieService`.
+- `src/app/features/movies`: компоненты для отображения фильмов, фильтрации и деталей.
+- `db.json`: источник данных для локального JSON Server.
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Следуя инструкциям выше, вы сможете запустить приложение и изучить каталог фильмов с поиском и подробными карточками.
